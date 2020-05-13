@@ -37,4 +37,5 @@ data = {'product_name': notebook_name, 'product_price': notebook_price}
 df_product = pd.DataFrame.from_dict(data)
 
 # import dataframe to database
-dbm.write_data_to_database(df_product)
+new_df =  dbm.data_cleansing(df_product)
+dbm.write_data_to_database(new_df)
