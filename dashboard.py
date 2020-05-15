@@ -42,7 +42,7 @@ app.layout = html.Div([
         html.H2('All product info'),
         html.Table(id='my-table'),
         html.P('')
-    ], style={'width': '55%', 'float': 'right', 'display': 'inline-block'})
+    ], style={'width': '55%', 'float': 'right', 'display': 'inline-block', 'overflowY': 'auto'})
 ], style={'width': '90%', 'height': '100vh',  'display': 'inline-block'})
 
 
