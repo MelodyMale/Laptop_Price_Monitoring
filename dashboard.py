@@ -35,7 +35,7 @@ app.layout = html.Div([
             id='product-dropdown',
             options=dict_products,
             multi=True,
-            value = ["HP 15S-DU2001TX (SILVER)", "ASUS LAPTOP 15 X509JA-EJ141T (SLATE GRAY)"]
+            value = [dict_products[index]['value'] for index in range(2)]
         )
     ], style={'width': '40%', 'display': 'inline-block'}),
     html.Div([
@@ -48,9 +48,9 @@ app.layout = html.Div([
 
 # for the table
 @app.callback(Output('my-table', 'children'), [Input('product-dropdown', 'value')])
-def generate_table(selected_dropdown_value, max_rows=20):
+def generate_table(selected_dropdown_value, max_rows=6):
     product_df_filter = product_df[(product_df['product_name'].isin(selected_dropdown_value))]
-    product_df_filter = product_df_filter.sort_values(['index','datetime'], ascending=True)
+    product_df_filter = product_df_filter.sort_values(['product_name','datetime'], ascending=True)
 
     return [html.Tr([html.Th(col) for col in product_df_filter  .columns])] + [html.Tr([
         html.Td(product_df_filter.iloc[i][col]) for col in product_df_filter  .columns

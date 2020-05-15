@@ -1,10 +1,15 @@
 import pandas as pd
 import sqlite3
 from sqlalchemy import create_engine
+import os.path
 
-conn = sqlite3.connect("products.db")
-disk_engine = create_engine('sqlite:///products.db')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "products.db")
+conn = sqlite3.connect(db_path)
 c = conn.cursor()
+
+disk_engine = create_engine('sqlite:///' + db_path)
+
 
 def read():
     df = pd.read_sql_query("select * from laptops;", conn)

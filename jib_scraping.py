@@ -5,23 +5,34 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import pandas as pd
 import dbm
+import os.path
+
+
+# set absolute path
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+firefoxdriver = os.path.join(BASE_DIR, 'geckodriver')
 
 # Run the argument with incognito
-option = webdriver.ChromeOptions()
-option.add_argument(' — incognito')
-browser = webdriver.Chrome(executable_path='chromedriver', options=option)
-browser.get("https://www.jib.co.th/web/product/product_list/2/25")
+firefox_profile = webdriver.FirefoxProfile()
+firefox_profile.set_preference("driver.privatebrowsing.autostart", True)
+driver = webdriver.Firefox(executable_path=firefoxdriver, firefox_profile=firefox_profile)
+
+
+# option.add_argument(' — incognito')
+# driver = webdriver.Chrome(executable_path=chromedriver, options=option)
+
+driver.get("https://www.jib.co.th/web/product/product_list/2/25")
 
 # Wait 30 seconds for page to load
 timeout = 30
 try:
-    WebDriverWait(browser, timeout).until(EC.visibility_of_element_located((By.ID, "body")))
+    WebDriverWait(driver, timeout).until(EC.visibility_of_element_located((By.ID, "body")))
 except TimeoutException:
     print("Timed out waiting for page to load")
-    browser.quit()
+    driver.quit()
 
 # find_elements by class to contain element
-notebook_container = browser.find_elements(By.CLASS_NAME, 'divboxpro')
+notebook_container = driver.find_elements(By.CLASS_NAME, 'divboxpro')
 
 # lists for contain data
 notebook_name = list()
