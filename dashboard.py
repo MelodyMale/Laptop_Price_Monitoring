@@ -42,13 +42,13 @@ app.layout = html.Div([
         html.H2('All product info'),
         html.Table(id='my-table'),
         html.P('')
-    ], style={'width': '55%', 'float': 'right', 'display': 'inline-block', 'overflowY': 'auto'})
+    ], style={'width': '55%', 'float': 'right', 'display': 'inline-block', 'overflowY': 'auto', 'height' : '40%'})
 ], style={'width': '90%', 'height': '100vh',  'display': 'inline-block'})
 
 
 # for the table
 @app.callback(Output('my-table', 'children'), [Input('product-dropdown', 'value')])
-def generate_table(selected_dropdown_value, max_rows=6):
+def generate_table(selected_dropdown_value, max_rows=20):
     product_df_filter = product_df[(product_df['product_name'].isin(selected_dropdown_value))]
     product_df_filter = product_df_filter.sort_values(['product_name','datetime'], ascending=True)
 
